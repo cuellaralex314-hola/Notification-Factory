@@ -23,6 +23,7 @@
 
 class OrderService
 {
+        public function __construct(private OrderEvents $eventos) {}
     /**
      * ❌ METODO MAL APLICADO: procesarPedidoCompleto()
      *    Sintomas medibles:
@@ -77,9 +78,7 @@ class OrderService
         }
 
         // ---- 5. Avisos internos (deberia ser un Observer) ----
-        $eventos = new OrderEvents();
-        $eventos->pedidoCreado($order);
-
+                $this->eventos->pedidoCreado($order);
         // ---- 6. Reporte (deberia ser un Decorator) ----
         $generador = new ReportGenerator();
         echo $generador->generate("Pedido {$id}", true, true, false) . '<br>';
