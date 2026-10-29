@@ -30,13 +30,13 @@ class NotificationSender
     public function enviar(string $tipo, string $destino, string $mensaje): void
     {
         if ($tipo === 'email') {
-            $email = new EmailNotification($destino);
-            $email->send($mensaje);
+            $email = new EmailNotification();
+            $email->enviarEmail($destino, 'Pedido del laboratorio', $mensaje);
         }
 
         if ($tipo === 'sms') {
-            $sms = new SmsNotification($destino);
-            $sms->send($mensaje);
+            $sms = new SmsNotification();
+            $sms->mandarSms($destino, $mensaje);
         }
 
         // ❌ Si el tipo no existe, no pasa nada y nadie se entera.
