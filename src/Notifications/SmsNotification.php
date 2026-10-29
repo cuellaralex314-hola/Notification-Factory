@@ -4,25 +4,26 @@
  *  NOTIFICACION POR SMS
  * ============================================================================
  *
- *  CONTRATO UNIFICADO
- *     Misma responsabilidad que EmailNotification mediante send().
- *     El numero se configura al construir la notificacion.
+ *  ❌ DEUDA SEMBRADA
+ *     Misma responsabilidad que EmailNotification pero con OTRA firma:
+ *        EmailNotification::enviarEmail($destinatario, $asunto, $cuerpo)
+ *        SmsNotification::mandarSms($numero, $texto)
+ *     Al no compartir contrato, el cliente necesita un if por cada tipo.
+ *     Ese if es exactamente la deuda que despues repara Factory.
  *
- *  IMPLEMENTACION
+ *  ✅ FORMA CORRECTA
  *     Ambas implementan Notification::send(string $message): void.
  * ============================================================================
  */
 
-require_once __DIR__ . '/Notification.php';
-
-class SmsNotification implements Notification
+class SmsNotification
 {
-    public function __construct(private string $numero)
+    /**
+     * ❌ METODO MAL APLICADO: mandarSms()
+     *    ✅ send(string $message): void, igual que el resto de las notificaciones.
+     */
+    public function mandarSms(string $numero, string $texto): void
     {
-    }
-
-    public function send(string $message): void
-    {
-        echo "[SMS] a {$this->numero}: {$message}<br>";
+        echo "[SMS] a {$numero}: {$texto}<br>";
     }
 }
