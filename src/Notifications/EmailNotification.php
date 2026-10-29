@@ -4,31 +4,28 @@
  *  NOTIFICACION POR EMAIL
  * ============================================================================
  *
- *  CONTRATO UNIFICADO
- *     Esta clase implementa Notification mediante send().
- *     El destinatario se configura al construir la notificacion.
- *     El metodo unificado es send(string $message): void.
+ *  ❌ DEUDA SEMBRADA
+ *     Esta clase NO implementa ninguna interfaz.
+ *     Quien la usa depende de la clase concreta => acoplamiento fuerte.
+ *     El metodo se llama enviarEmail(); el de SMS se llama mandarSms().
  *     Nombres distintos para la misma responsabilidad: imposible intercambiarlos.
  *
- *  IMPLEMENTACION
+ *  ✅ FORMA CORRECTA
  *     interface Notification { public function send(string $message): void; }
  *     class EmailNotification implements Notification { public function send(...) }
  *     Mismo contrato => polimorfismo => el cliente no conoce la clase concreta.
  * ============================================================================
  */
 
-require_once __DIR__ . '/Notification.php';
-
-class EmailNotification implements Notification
+class EmailNotification
 {
-    public function __construct(
-        private string $destinatario,
-        private string $asunto = 'Pedido del laboratorio'
-    ) {
-    }
-
-    public function send(string $message): void
+    /**
+     * ❌ METODO MAL APLICADO: enviarEmail()
+     *    El nombre y la firma son propios de esta clase.
+     *    ✅ Deberia llamarse send(string $message): void, definido por la interfaz.
+     */
+    public function enviarEmail(string $destinatario, string $asunto, string $cuerpo): void
     {
-        echo "[EMAIL] para {$this->destinatario} | {$this->asunto}: {$message}<br>";
+        echo "[EMAIL] para {$destinatario} | {$asunto}: {$cuerpo}<br>";
     }
 }
